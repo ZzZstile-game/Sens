@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>سفارش سنسی Free Fire</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at center, #0f0f0f, #000);
+      font-family: sans-serif;
+      color: #fff;
+      text-align: center;
+    }
+
+    .container {
+      padding: 60px 20px;
+      animation: fadeIn 1.2s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #00ffc8;
+      text-shadow: 0 0 15px #00ffc8;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #00ffc8; }
+      to { text-shadow: 0 0 20px #00ffc8; }
+    }
+
+    form {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 15px;
+      display: inline-block;
+      box-shadow: 0 0 25px rgba(0,255,200,0.2);
+      margin-bottom: 30px;
+    }
+
+    input, select, button {
+      padding: 12px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      width: 90%;
+      max-width: 300px;
+      font-size: 16px;
+    }
+
+    input, select {
+      background: #222;
+      color: #fff;
+      box-shadow: 0 0 10px #00c896 inset;
+    }
+
+    input::placeholder {
+      color: #aaa;
+    }
+
+    button {
+      background: #00c896;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 0 15px #00c896;
+    }
+
+    button:hover {
+      background: #00ffa2;
+      box-shadow: 0 0 20px #00ffa2;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🕹️ فرم سفارش سنسی Free Fire</h1>
+
+    <!-- مرحله اول: نام و شماره -->
+    <form id="step1">
+      <input type="text" id="name" placeholder="نام شما" required><br>
+      <input type="text" id="phone" placeholder="شماره تماس" required><br>
+      <button type="submit">ادامه</button>
+    </form>
+
+    <!-- مرحله دوم: انتخاب دستگاه و سبک بازی -->
+    <form id="step2" style="display:none;">
+      <select id="device" required>
+        <option value="">انتخاب دستگاه</option>
+        <option value="Samsung">Samsung</option>
+        <option value="Xiaomi">Xiaomi</option>
+        <option value="iPhone">iPhone</option>
+        <option value="Huawei">Huawei</option>
+      </select><br>
+
+      <select id="style" required>
+        <option value="">سبک بازی</option>
+        <option value="Rush">راش</option>
+        <option value="Control">کنترل</option>
+        <option value="Sniper">اسنایپر</option>
+      </select><br>
+
+      <button type="submit">پرداخت نهایی</button>
+    </form>
+  </div>
+
+  <script>
+    // مرحله اول: ارسال به ایمیل با لینک اختصاصی
+    document.getElementById("step1").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+
+      fetch("https://formsubmit.co/ajax/el/ruziwi", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, phone, _captcha: false })
+      })
+      .then(response => {
+        if (response.ok) {
+          document.getElementById("step1").style.display = "none";
+          document.getElementById("step2").style.display = "inline-block";
+        } else {
+          alert("ارسال اطلاعات ناموفق بود!");
+        }
+      })
+      .catch(error => {
+        console.error("خطا:", error);
+        alert("مشکلی پیش آمد!");
+      });
+    });
+
+    // مرحله دوم: انتقال به لینک پرداخت با اطلاعات انتخاب‌شده
+    document.getElementById("step2").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const device = document.getElementById("device").value;
+      const style = document.getElementById("style").value;
+      window.location.href = `https://daramet.com/ZzZstile?device=${device}&style=${style}`;
+    });
+  </script>
+</body>
+</html>
